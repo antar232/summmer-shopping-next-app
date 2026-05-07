@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +27,17 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar/>
-       <main>
-        <CartProvider/>
-         {children}
-       </main>
-       <Footer/>
-        </body>
+      <body className="min-h-full flex flex-col bg-white">
+        {/* CartProvider দিয়ে পুরো অ্যাপটি র‍্যাপ করতে হবে */}
+        <CartProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <ToastContainer />
+        </CartProvider>
+      </body>
     </html>
   );
 }

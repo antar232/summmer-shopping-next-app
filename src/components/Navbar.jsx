@@ -1,59 +1,91 @@
+// "use client";
 // import Link from 'next/link';
-// import React from 'react';
+// import { useCart } from '@/context/CartContext';
 
 // const Navbar = () => {
+//     // Context থেকে ডেটা নিয়ে আসা হচ্ছে
+//     const { cartItems, totalCount, totalPrice } = useCart();
+
 //     return (
-//         <div className="navbar bg-gradient-to-r from-orange-600 via-red-500 to-pink-500 text-white shadow-lg px-4 md:px-8">
+//         <div className="navbar bg-gradient-to-r from-orange-600 via-red-500 to-pink-500 text-white shadow-lg px-4 md:px-8 sticky top-0 z-50">
             
-//             {/* 1. START: Logo (Desktop) & Hamburger (Mobile) */}
+//             {/* Logo Section */}
 //             <div className="navbar-start">
-//                 {/* Mobile Dropdown */}
-//                 <div className="dropdown">
-//                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-//                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-//                         </svg>
-//                     </div>
-//                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black">
-//                         <li><Link href="/">Home</Link></li>
-//                         <li><Link href="/products">Product</Link></li>
-//                         <li><Link href="/login">Login</Link></li>
-//                         <li><Link href="/register">Register</Link></li>
-//                     </ul>
-//                 </div>
-
-//                 {/* Logo - Always on the left for desktop */}
-//                 <div className="hidden lg:flex items-center gap-2">
-//                     <div className="text-3xl">
-//                         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-//                             <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-//                         </svg>
-//                     </div>
-//                     <Link href="/" className="text-2xl font-bold tracking-tight">SunCart</Link>
-//                 </div>
+//                 <Link href="/" className="text-2xl font-bold flex items-center gap-2">
+//                     <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+//                         <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+//                     </svg>
+//                     SunCart
+//                 </Link>
 //             </div>
 
-//             {/* 2. CENTER: Home and Product Links */}
-//             <div className="navbar-center">
-//                 {/* Mobile Logo appears here if you want it centered on small screens */}
-//                 <Link href="/" className="text-xl font-bold lg:hidden">SunCart</Link>
-
-//                 {/* Desktop Menu Links */}
-//                 <div className="hidden lg:flex">
-//                     <ul className="menu menu-horizontal px-1 gap-8 font-medium">
-//                         <li><Link href="/" className="hover:text-gray-200">Home</Link></li>
-//                         <li><Link href="/products" className="hover:text-gray-200">Product</Link></li>
-//                     </ul>
-//                 </div>
+//             {/* Desktop Navigation */}
+//             <div className="navbar-center hidden lg:flex">
+//                 <ul className="menu menu-horizontal px-1 gap-4 font-medium">
+//                     <li><Link href="/" className="hover:text-orange-200 transition">Home</Link></li>
+//                     <li><Link href="/products" className="hover:text-orange-200 transition">Product</Link></li>
+//                     <li><Link href="/products" className="hover:text-orange-200 transition">My Profile</Link></li>
+//                 </ul>
 //             </div>
 
-//             {/* 3. END: Login and Register Buttons (Right Side) */}
-//             <div className="navbar-end">
-//                 <div className="hidden lg:flex gap-3">
-//                     <Link href="/login" className="btn btn-sm bg-white text-orange-600 border-none hover:bg-gray-100 px-6 normal-case font-bold">
+//             {/* Cart & Auth Buttons */}
+//             <div className="navbar-end gap-3 md:gap-4">
+                
+//                 {/* --- Dynamic Cart Dropdown --- */}
+//                 <div className="dropdown dropdown-end">
+//                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+//                         <div className="indicator">
+//                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+//                             </svg>
+//                             {/* লাইভ কাউন্ট এখানে আপডেট হবে */}
+//                             <span className="badge badge-sm indicator-item bg-white text-orange-600 border-none font-bold">
+//                                 {totalCount}
+//                             </span>
+//                         </div>
+//                     </div>
+                    
+//                     <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-64 bg-base-100 shadow-2xl text-black">
+//                         <div className="card-body">
+//                             <span className="font-bold text-lg border-b pb-2 text-slate-800">{totalCount} Items</span>
+                            
+//                             <div className="max-h-48 overflow-y-auto">
+//                                 {cartItems.length > 0 ? (
+//                                     cartItems.map((item) => (
+//                                         <div key={item.id} className="flex justify-between py-2 border-b border-gray-50 last:border-0">
+//                                             <div className="flex flex-col">
+//                                                 <span className="font-bold text-xs truncate w-32">{item.name}</span>
+//                                                 <span className="text-gray-400 text-[10px]">Qty: {item.quantity}</span>
+//                                             </div>
+//                                             <span className="text-orange-600 font-bold text-xs">
+//                                                 ${item.price * item.quantity}
+//                                             </span>
+//                                         </div>
+//                                     ))
+//                                 ) : (
+//                                     <p className="text-center text-gray-400 py-4">Your cart is empty</p>
+//                                 )}
+//                             </div>
+
+//                             <div className="pt-2 border-t mt-1">
+//                                 <p className="flex justify-between font-bold text-slate-700">
+//                                     <span>Total:</span>
+//                                     <span>${totalPrice}</span>
+//                                 </p>
+//                                 <Link href="/cart" className="btn bg-orange-600 text-white btn-block btn-sm mt-3 border-none hover:bg-orange-700">
+//                                     View Cart
+//                                 </Link>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+
+//                 {/* Login & Register Buttons */}
+//                 <div className="hidden sm:flex gap-2">
+//                     <Link href="/login" className="btn btn-sm bg-white text-orange-600 border-none px-6 font-bold hover:bg-gray-100 transition shadow-sm">
 //                         Login
 //                     </Link>
-//                     <Link href="/register" className="btn btn-sm btn-outline text-white hover:bg-white hover:text-pink-600 px-6 normal-case font-bold">
+//                     <Link href="/register" className="btn btn-sm btn-outline text-white hover:bg-white hover:text-orange-600 px-5 font-bold border-white transition">
 //                         Register
 //                     </Link>
 //                 </div>
@@ -63,82 +95,104 @@
 // };
 
 // export default Navbar;
+"use client";
 import Link from 'next/link';
-import React from 'react';
+import { useCart } from '@/context/CartContext';
+import { Menu } from 'lucide-react'; // আইকনের জন্য
 
 const Navbar = () => {
+    const { cartItems, totalCount, totalPrice } = useCart();
+
+    const navLinks = (
+        <>
+            <li><Link href="/" className="hover:text-orange-200 transition">Home</Link></li>
+            <li><Link href="/products" className="hover:text-orange-200 transition">Product</Link></li>
+            <li><Link href="/profile" className="hover:text-orange-200 transition">My Profile</Link></li>
+        </>
+    );
+
     return (
         <div className="navbar bg-gradient-to-r from-orange-600 via-red-500 to-pink-500 text-white shadow-lg px-4 md:px-8 sticky top-0 z-50">
             
-            {/* 1. START: Logo & Hamburger */}
             <div className="navbar-start">
+                {/* --- Mobile Menu (Hamburger) --- */}
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-                        </svg>
+                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-1">
+                        <Menu size={24} />
                     </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black font-medium">
-                        <li><Link href="/">Home</Link></li>
-                        <li><Link href="/products">Products</Link></li>
-                        <li><Link href="/login">Login</Link></li>
-                        <li><Link href="/register">Register</Link></li>
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black">
+                        {navLinks}
                     </ul>
                 </div>
 
-                <div className="hidden lg:flex items-center gap-2">
-                    <div className="text-3xl">
-                        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <Link href="/" className="text-2xl font-bold tracking-tight">SunCart</Link>
-                </div>
+                {/* Logo */}
+                <Link href="/" className="text-xl md:text-2xl font-bold flex items-center gap-2 ml-2 lg:ml-0">
+                    <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    SunCart
+                </Link>
             </div>
 
-            {/* 2. CENTER: Mobile Logo & Desktop Links */}
-            <div className="navbar-center">
-                <Link href="/" className="text-xl font-bold lg:hidden">SunCart</Link>
-
-                <div className="hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1 gap-8 font-medium">
-                        <li><Link href="/" className="hover:text-gray-200 transition">Home</Link></li>
-                        <li><Link href="/products" className="hover:text-gray-200 transition">Product</Link></li>
-                    </ul>
-                </div>
+            {/* Desktop Navigation */}
+            <div className="navbar-center hidden lg:flex">
+                <ul className="menu menu-horizontal px-1 gap-4 font-medium">
+                    {navLinks}
+                </ul>
             </div>
 
-            {/* 3. END: Cart, Login, and Register */}
             <div className="navbar-end gap-2 md:gap-4">
-                
-                {/* --- CART ICON START --- */}
+                {/* Cart Dropdown */}
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                         <div className="indicator">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span className="badge badge-sm indicator-item bg-white text-orange-600 border-none font-bold">8</span>
+                            <span className="badge badge-sm indicator-item bg-white text-orange-600 border-none font-bold">
+                                {totalCount}
+                            </span>
                         </div>
                     </div>
-                    {/* কার্ট ড্রপডাউন মেনু (অপশনাল) */}
-                    <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow text-black">
+                    
+                    {/* Cart Content (Desktop & Mobile same) */}
+                    <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-64 bg-base-100 shadow-2xl text-black">
                         <div className="card-body">
-                            <span className="font-bold text-lg">8 Items</span>
-                            <span className="text-info font-medium">Subtotal: $999</span>
-                            <div className="card-actions">
-                                <Link href="/cart" className="btn btn-orange-600 bg-orange-600 text-white btn-block hover:bg-orange-700 border-none">View Cart</Link>
+                            <span className="font-bold text-lg border-b pb-2 text-slate-800">{totalCount} Items</span>
+                            <div className="max-h-48 overflow-y-auto">
+                                {cartItems.length > 0 ? (
+                                    cartItems.map((item) => (
+                                        <div key={item.id} className="flex justify-between py-2 border-b border-gray-50 last:border-0">
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-xs truncate w-32">{item.name}</span>
+                                                <span className="text-gray-400 text-[10px]">Qty: {item.quantity}</span>
+                                            </div>
+                                            <span className="text-orange-600 font-bold text-xs">${item.price * item.quantity}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-center text-gray-400 py-4">Your cart is empty</p>
+                                )}
+                            </div>
+                            <div className="pt-2 border-t mt-1">
+                                <p className="flex justify-between font-bold text-slate-700">
+                                    <span>Total:</span>
+                                    <span>${totalPrice}</span>
+                                </p>
+                                <Link href="/cart" className="btn bg-orange-600 text-white btn-block btn-sm mt-3 border-none hover:bg-orange-700">
+                                    View Cart
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* --- CART ICON END --- */}
 
-                <div className="hidden sm:flex gap-3">
-                    <Link href="/login" className="btn btn-sm bg-white text-orange-600 border-none hover:bg-gray-100 px-6 normal-case font-bold shadow-md">
+                {/* Login Button - Mobile এ ছোট দেখাবে */}
+                <div className="flex gap-1 md:gap-2">
+                    <Link href="/login" className="btn btn-xs md:btn-sm bg-white text-orange-600 border-none px-3 md:px-6 font-bold hover:bg-gray-100 shadow-sm">
                         Login
                     </Link>
-                    <Link href="/register" className="btn btn-sm btn-outline text-white hover:bg-white hover:text-pink-600 px-6 normal-case font-bold border-white">
+                    <Link href="/register" className="xs:flex btn btn-xs md:btn-sm btn-outline text-white hover:bg-white hover:text-orange-600 px-3 md:px-5 font-bold border-white">
                         Register
                     </Link>
                 </div>

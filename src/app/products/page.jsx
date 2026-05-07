@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ProductWithNavbar = () => {
@@ -31,8 +32,7 @@ const ProductWithNavbar = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      \
-      {/* 2. ক্যাটাগরি সেকশন (নেভবারের নিচে) */}
+      
       <div className="bg-white border-b overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto px-6 py-4 flex gap-3 items-center">
           <span className="text-gray-400 font-medium text-sm pr-2 border-r hidden md:block">
@@ -53,8 +53,6 @@ const ProductWithNavbar = () => {
           ))}
         </div>
       </div>
-
-      {/* 3. প্রোডাক্টস গ্রিড */}
       <div className="max-w-7xl mx-auto p-6 md:p-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
@@ -99,9 +97,12 @@ const ProductWithNavbar = () => {
                 </p>
 
                 {/* Gradient Button */}
-                <button className="w-full bg-gradient-to-r from-orange-500 via-orange-500 to-pink-500 text-white font-bold py-3 rounded-full hover:opacity-90 transition shadow-lg shadow-orange-100">
+                <Link
+                  href={`/details/${product.id}`}
+                  className="block text-center mt-4 bg-gradient-to-r from-orange-500 to-pink-500 text-white py-2 rounded-full font-semibold hover:opacity-90 transition active:scale-95"
+                >
                   View Details
-                </button>
+                </Link>
               </div>
             </div>
           ))}
