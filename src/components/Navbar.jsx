@@ -107,7 +107,7 @@ const Navbar = () => {
         <>
             <li><Link href="/" className="hover:text-orange-200 transition">Home</Link></li>
             <li><Link href="/products" className="hover:text-orange-200 transition">Product</Link></li>
-            <li><Link href="/profile" className="hover:text-orange-200 transition">My Profile</Link></li>
+            <li><Link href="/myprofile" className="hover:text-orange-200 transition">My Profile</Link></li>
         </>
     );
 

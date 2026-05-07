@@ -6,7 +6,16 @@ import { Trash2, Plus, Minus, ShoppingBag, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const CartDetails = () => {
-    const { cartItems, totalPrice, totalCount, addToCart, decreaseQuantity, removeFromCart, clearCart } = useCart();
+    // এখানে increaseQuantity ফাংশনটি Context থেকে নিয়ে আসা হয়েছে
+    const { 
+        cartItems, 
+        totalPrice, 
+        totalCount, 
+        increaseQuantity, // কোয়ান্টিটি বাড়ানোর জন্য
+        decreaseQuantity, // কোয়ান্টিটি কমানোর জন্য
+        removeFromCart, 
+        clearCart 
+    } = useCart();
 
     const handlePurchase = () => {
         toast.success("Successfully Purchased! Thank you for shopping.", {
@@ -57,6 +66,7 @@ const CartDetails = () => {
                                     <div className="flex items-center justify-between mt-4">
                                         {/* Quantity Selector */}
                                         <div className="flex items-center gap-4 bg-gray-100 px-4 py-2 rounded-xl">
+                                            {/* মাইনাস বাটন: decreaseQuantity কল করবে */}
                                             <button 
                                                 onClick={() => decreaseQuantity(item.id)}
                                                 className="hover:text-orange-600 transition disabled:opacity-30"
@@ -64,15 +74,18 @@ const CartDetails = () => {
                                             >
                                                 <Minus size={18} />
                                             </button>
+
                                             <span className="font-bold text-lg w-4 text-center">{item.quantity}</span>
+
+                                            {/* প্লাস বাটন: increaseQuantity কল করবে */}
                                             <button 
-                                                onClick={() => addToCart(item)}
+                                                onClick={() => increaseQuantity(item.id)}
                                                 className="hover:text-orange-600 transition"
                                             >
                                                 <Plus size={18} />
                                             </button>
                                         </div>
-                                        <p className="font-black text-slate-800 text-xl">${item.price * item.quantity}</p>
+                                        <p className="font-black text-slate-800 text-xl">${(item.price * item.quantity).toFixed(2)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +99,7 @@ const CartDetails = () => {
                             <div className="space-y-4 mb-6">
                                 <div className="flex justify-between text-slate-500">
                                     <span>Subtotal</span>
-                                    <span className="font-bold text-slate-800">${totalPrice}</span>
+                                    <span className="font-bold text-slate-800">${totalPrice.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-slate-500">
                                     <span>Shipping</span>
@@ -95,7 +108,7 @@ const CartDetails = () => {
                                 <div className="h-px bg-gray-100 my-4"></div>
                                 <div className="flex justify-between text-2xl font-black text-slate-800">
                                     <span>Total</span>
-                                    <span className="text-orange-600">${totalPrice}</span>
+                                    <span className="text-orange-600">${totalPrice.toFixed(2)}</span>
                                 </div>
                             </div>
 
