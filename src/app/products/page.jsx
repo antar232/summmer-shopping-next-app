@@ -10,7 +10,7 @@ const ProductWithNavbar = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
-    fetch("/data.json")
+    fetch("http://localhost:3000//data.json")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
